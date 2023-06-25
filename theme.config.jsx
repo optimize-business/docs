@@ -4,5 +4,10 @@ export default {
   darkMode: false,
   nextThemes: {
     forcedTheme: 'light'
+  },
+  useNextSeoProps() {
+    return {
+      titleTemplate: '%s - Optimize'
+    }
   }
 }
