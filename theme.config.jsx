@@ -5,6 +5,9 @@ export default {
   nextThemes: {
     forcedTheme: 'light'
   },
+  footer: {
+    text: "Copyright © 2023 Optimize"
+  },
   useNextSeoProps() {
     return {
       titleTemplate: '%s - Optimize'
