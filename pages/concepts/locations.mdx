@@ -1,0 +1,69 @@
+import { Callout } from 'nextra/components'
+
+# Locations
+
+Locations are a foundational representation of *where* a given item is. This applies to all manor of objects like stock, equipments, workcenters.
+
+## Locations are a tree
+
+By representing each location as being a sub-location of another (except for the root location), we can define where an item is with varying levels of specificity.
+
+```mermaid
+graph TD;
+    a((A)) --> b((B))
+    a --> c((C))
+    b --> d((D))
+    b --> e((E))
+```
+
+<Callout>
+Consider yourself a purcahsing officer who is organising an order of widgets to the 'Southside Warehouse'. At this stage you don't want to specify exactly where the incomming stock will reside, so you simply select the Southside location. Upon receiving the goods, the warehous manager can then select the specific location Rack 4 → Shelf 2 to place the goods.
+</Callout>
+
+## Locations don't have to be complicated
+
+A location tree that is too deep can be difficult to work with and navigate. If you find yourself in this sitation, it may be a good idea to 'flatten' the location tree by moving some of the locations into their parent location.
+
+Here is an example:
+
+```mermaid
+graph TD;
+    subgraph a[Before]
+        bw[Warehouse] --> br[Rack A]
+        br --> brs1[Shelf 1]
+        br --> brs2[Shelf 2]
+    end
+
+    subgraph b[After]
+        aw[Warehouse]
+        aw --> ars1[Shelf A1]
+        aw --> ars2[Shelf A2]
+    end
+```
+
+After flattening the tree we know that 'Shelf A1' is in rack 'A' because it's in the name and there is no other shelf with the same name.
+
+## An in-depth example
+
+Here is an exmaple of two fictional warehouses. Note that because the warehouses are in physically separate locations, they do not share any sub-locations.
+
+```mermaid
+graph TD;
+    ssw[Southside Warehouse]
+    ssw --> eng[Engineering Office]
+    ssw --> wc1[Workcenter 1]
+    wc1 --> table1[Table 1]
+    wc1 --> cnc1[CNC 1]
+    ssw --> wc2[Workcenter 2]
+    wc2 --> cnc2[CNC 2]
+
+    nsw[Northside Warehouse]
+    nsw --> qa[QA Lab]
+    nsw --> rack1[Rack 1]
+    rack1 --> r1shelf1[Shelf 1]
+    rack1 --> r1shelf2[Shelf 2]
+    nsw --> rack2[Rack 2]
+    rack2 --> r2shelf1[Shelf 1]
+    rack2 --> r2shelf2[Shelf 2]
+    r1shelf1 --> r1s1box1[Box #1023]
+```
